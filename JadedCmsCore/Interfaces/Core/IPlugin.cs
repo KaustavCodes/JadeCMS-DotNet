@@ -8,6 +8,11 @@ namespace JadedCmsCore.Interfaces.Core;
 public interface IPlugin
 {
     string Name { get; }
+
+    string Description { get; }
+
+    string Author { get; }
+    
     void Initialize(IServiceCollection services);
     void Configure(IApplicationBuilder app, IWebHostEnvironment env);
     void RegisterRoutes(IEndpointRouteBuilder endpoints);
