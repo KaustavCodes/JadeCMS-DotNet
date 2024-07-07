@@ -6,7 +6,7 @@ public class DemoController: Controller
 {
     public IActionResult Index()
     {
-        return Content("Hello from DemoPlugin!");
+        return View();
     }
 }
  

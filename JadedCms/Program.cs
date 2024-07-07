@@ -1,7 +1,7 @@
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-IMvcBuilder mvcBuilder = builder.Services.AddControllersWithViews();
+IMvcBuilder mvcBuilder = builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
 var contentHookManager = new JadedCmsCore.Interfaces.Core.ContentHookManager();
 builder.Services.AddSingleton<JadedCmsCore.Interfaces.Core.IContentHookManager>(contentHookManager);

@@ -4,6 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
+using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
 
 namespace DemoPlugin;
 
@@ -36,6 +39,10 @@ public class DemoPlugin: IPlugin
         // Register views and view components
         var assembly = typeof(DemoPlugin).Assembly;
         mvcBuilder.PartManager.ApplicationParts.Add(new AssemblyPart(assembly));
+        mvcBuilder.Services.Configure<MvcRazorRuntimeCompilationOptions>(options =>
+        {
+            options.FileProviders.Add(new EmbeddedFileProvider(assembly));
+        });
     }
 
     public void RegisterContentHooks(IContentHookManager hookManager)
