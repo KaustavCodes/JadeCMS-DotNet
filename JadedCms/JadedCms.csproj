@@ -4,6 +4,13 @@
     <ProjectReference Include="..\JadedCmsCore\JadedCmsCore.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="Plugins\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>Plugins\%(RecursiveDir)%(Filename)%(Extension)</Link>
+    </Content>
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>

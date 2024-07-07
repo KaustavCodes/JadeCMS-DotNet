@@ -1,11 +1,15 @@
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+IMvcBuilder mvcBuilder = builder.Services.AddControllersWithViews();
+
+var contentHookManager = new JadedCmsCore.Interfaces.Core.ContentHookManager();
+builder.Services.AddSingleton<JadedCmsCore.Interfaces.Core.IContentHookManager>(contentHookManager);
 
 // Initialize PluginManager and load plugins
 var pluginManager = new JadedCmsCore.Services.Core.PluginManager();
-pluginManager.LoadPlugins(Path.Combine(Directory.GetCurrentDirectory(), "Plugins"), builder.Services);
+pluginManager.LoadPlugins(Path.Combine(Directory.GetCurrentDirectory(), "Plugins"), builder.Services, contentHookManager);
+pluginManager.RegisterViewLocations(mvcBuilder);
 
 var app = builder.Build();
 
@@ -24,6 +28,13 @@ app.UseRouting();
 
 // Custom Plugin Injection Middleware
 pluginManager.ConfigurePlugins(app, app.Environment);
+
+app.UseEndpoints(endpoints =>
+{
+    // Custom Plugin Injection for Endpoints
+    pluginManager.RegisterRoutes(endpoints);
+});
+
 
 app.UseAuthorization();
 

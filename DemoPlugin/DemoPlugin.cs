@@ -28,7 +28,7 @@ public class DemoPlugin: IPlugin
         // Define routes for the plugin
         endpoints.MapControllerRoute(
             name: "DemoPluginRoute",
-            pattern: "{controller=Home}/{action=Index}/{id?}");
+            pattern: "DemoPlugin/{controller=Demo}/{action=Index}/{id?}");
     }
 
     public void RegisterViewLocations(IMvcBuilder mvcBuilder)
@@ -36,6 +36,13 @@ public class DemoPlugin: IPlugin
         // Register views and view components
         var assembly = typeof(DemoPlugin).Assembly;
         mvcBuilder.PartManager.ApplicationParts.Add(new AssemblyPart(assembly));
+    }
+
+    public void RegisterContentHooks(IContentHookManager hookManager)
+    {
+        hookManager.RegisterContent("BeforeContent", () => "This is text from plugin. Should come before content.");
+
+        hookManager.RegisterContent("AfterContent", () => "This is text from plugin. Should come after content.");
     }
 
     public void Shutdown()
