@@ -18,6 +18,6 @@ public interface IPlugin
     void RegisterRoutes(IEndpointRouteBuilder endpoints);
     void RegisterViewLocations(IMvcBuilder mvcBuilder);
 
-    void RegisterContentHooks(IContentHookManager hookManager);
+    void RegisterContentHooks(IContentHookManager hookManager, IServiceProvider serviceProvider);
     void Shutdown();
 }

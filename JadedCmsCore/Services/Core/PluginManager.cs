@@ -10,7 +10,7 @@ public class PluginManager
 {
     private readonly List<IPlugin> _plugins = new List<IPlugin>();
 
-    public void LoadPlugins(string path, IServiceCollection services, IContentHookManager contentHookManager)
+    public void LoadPlugins(string path, IServiceCollection services)
     {
         var pluginFiles = Directory.GetFiles(path, "*.dll");
         foreach (var file in pluginFiles)
@@ -24,12 +24,18 @@ public class PluginManager
                 //Initialize the plugin
                 plugin.Initialize(services);
 
-                //Register the hooks
-                plugin.RegisterContentHooks(contentHookManager);
-
                 //Add the plugin to the list
                 _plugins.Add(plugin);
             }
+        }
+    }
+
+    // Register the hooks for all plugins
+    public void ConfigureHooks(IContentHookManager contentHookManager, IServiceProvider serviceProvider)
+    {
+        foreach (var plugin in _plugins)
+        {
+            plugin.RegisterContentHooks(contentHookManager, serviceProvider);
         }
     }
 

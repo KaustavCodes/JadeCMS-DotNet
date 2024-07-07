@@ -3,6 +3,9 @@
 public interface IContentHookManager
 {
     void RegisterContent(string hookName, Func<string> contentProvider);
+
+    void RegisterContent(string hookName, Func<Task<string>> contentProvider);
+
     IEnumerable<Func<string>> GetContentProviders(string hookName);
 }
 
@@ -17,6 +20,15 @@ public class ContentHookManager : IContentHookManager
             _hooks[hookName] = new List<Func<string>>();
         }
         _hooks[hookName].Add(contentProvider);
+    }
+
+    public void RegisterContent(string hookName, Func<Task<string>> contentProvider)
+    {
+        if (!_hooks.ContainsKey(hookName))
+        {
+            _hooks[hookName] = new List<Func<string>>();
+        }
+        _hooks[hookName].Add(() => contentProvider().GetAwaiter().GetResult());
     }
 
     public IEnumerable<Func<string>> GetContentProviders(string hookName)
