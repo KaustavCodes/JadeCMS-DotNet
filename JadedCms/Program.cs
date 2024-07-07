@@ -3,6 +3,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+// Initialize PluginManager and load plugins
+var pluginManager = new JadedCmsCore.Services.Core.PluginManager();
+pluginManager.LoadPlugins(Path.Combine(Directory.GetCurrentDirectory(), "Plugins"), builder.Services);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -17,6 +21,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+// Custom Plugin Injection Middleware
+pluginManager.ConfigurePlugins(app, app.Environment);
 
 app.UseAuthorization();
 

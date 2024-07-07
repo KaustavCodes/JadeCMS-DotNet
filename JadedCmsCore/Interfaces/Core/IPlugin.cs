@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Hosting;
 
-namespace JadedCmsCore;
+namespace JadedCmsCore.Interfaces.Core;
 
 public interface IPlugin
 {
