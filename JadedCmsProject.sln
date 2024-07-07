@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JadedCms", "JadedCms\JadedCms.csproj", "{00CAAF1C-55F2-4D1E-ADEB-115581BD3A6E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JadedCmsCore", "JadedCmsCore\JadedCmsCore.csproj", "{F245EF3F-B7EE-4E4B-8747-C74794310EB4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JadedCmsShared", "JadedCmsShared\JadedCmsShared.csproj", "{7897C1BE-1A72-46EB-9BE3-BEBA03DF0C60}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{00CAAF1C-55F2-4D1E-ADEB-115581BD3A6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00CAAF1C-55F2-4D1E-ADEB-115581BD3A6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00CAAF1C-55F2-4D1E-ADEB-115581BD3A6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00CAAF1C-55F2-4D1E-ADEB-115581BD3A6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F245EF3F-B7EE-4E4B-8747-C74794310EB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F245EF3F-B7EE-4E4B-8747-C74794310EB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F245EF3F-B7EE-4E4B-8747-C74794310EB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F245EF3F-B7EE-4E4B-8747-C74794310EB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7897C1BE-1A72-46EB-9BE3-BEBA03DF0C60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7897C1BE-1A72-46EB-9BE3-BEBA03DF0C60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7897C1BE-1A72-46EB-9BE3-BEBA03DF0C60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7897C1BE-1A72-46EB-9BE3-BEBA03DF0C60}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
