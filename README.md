@@ -38,7 +38,7 @@ Contributions are welcome! Please fork the repository and create a pull request 
 
 ## Roadmap
 
-- [ ] Build the CMS Core using MySql as the database
+- [x] Build the CMS Core using MySql as the database
 - [ ] Add the global tables and business logic
 - [ ] Add frontend page render logic via API's
 - [ ] Add SQL Server support
