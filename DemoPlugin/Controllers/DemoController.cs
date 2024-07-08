@@ -6,7 +6,7 @@ public class DemoController: Controller
 {
     public IActionResult Index()
     {
-        return View();
+        return View("Index");
     }
 }
  
