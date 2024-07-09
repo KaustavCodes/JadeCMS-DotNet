@@ -6,13 +6,12 @@ namespace JadedCmsCore.Services.Database;
 
 public class MsSqlDbService : IDatabaseService
 {
-    private string ConnectionString { get; }
+    private string _connectionString { get; set; }
     
-    private IDbConnection Conection { get; set; }
+    public IDbConnection Conection { get; set; }
     public MsSqlDbService(IConfiguration configuration)
     {
-        ConnectionString = configuration["ConnectionStrings:DbConnection"];
-        
+        _connectionString = configuration["ConnectionStrings:DbConnection"];
     }
     
     public Task<IEnumerable<T>> ExecuteQueryAsync<T>(string query, IEnumerable<IDbDataParameter> parameters = null)

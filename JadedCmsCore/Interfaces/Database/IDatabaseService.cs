@@ -4,7 +4,6 @@ namespace JadedCmsCore.Interfaces.Database;
 
 public interface IDatabaseService
 {
-    string ConnectionString { get; set; }
     IDbConnection Conection { get; set; }
     void OpenConection();
     void CloseConnection();
