@@ -49,11 +49,6 @@ public class DemoPlugin: IPlugin
     {
         var JadedCmsHelper = new JadedCmsCore.Services.Core.HelperServices();
 
-        // hookManager.RegisterContent("BeforeContent", async () =>
-        // {
-        //     return await JadedCmsHelper.ExecuteControllerAction(serviceProvider, "DemoPlugin.Controllers.DemoController", "Index");
-        // });
-
         hookManager.RegisterContent("BeforeContent", () => "This is text from plugin. Should come before content.");
 
         hookManager.RegisterContent("AfterContent", () => "This is text from plugin. Should come after content.");

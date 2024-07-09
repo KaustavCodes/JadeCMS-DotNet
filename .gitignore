@@ -399,3 +399,7 @@ FodyWeavers.xsd
 
 #MacOs Files
 ._*
+
+#Jaded CMS Files
+*/appsettings.json
+*/appsettings.*.json
