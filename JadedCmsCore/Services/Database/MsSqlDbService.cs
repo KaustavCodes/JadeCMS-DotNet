@@ -1,6 +1,7 @@
 using System.Data;
 using JadedCmsCore.Interfaces.Database;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Data.SqlClient;
 
 namespace JadedCmsCore.Services.Database;
 
