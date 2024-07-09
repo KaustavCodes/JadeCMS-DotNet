@@ -14,6 +14,17 @@ public class MsSqlDbService : IDatabaseService
         _connectionString = configuration["ConnectionStrings:DbConnection"];
     }
     
+    public void OpenConection()
+    {
+        Conection = new SqlConnection(_connectionString);
+        Conection.Open();
+    }
+    
+    public void CloseConnection()
+    {
+        Conection.Close();
+    }
+    
     public Task<IEnumerable<T>> ExecuteQueryAsync<T>(string query, IEnumerable<IDbDataParameter> parameters = null)
     {
         throw new NotImplementedException();
