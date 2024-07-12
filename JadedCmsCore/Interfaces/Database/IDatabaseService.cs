@@ -4,8 +4,8 @@ namespace JadedCmsCore.Interfaces.Database;
 
 public interface IDatabaseService
 {
-    IDbConnection Conection { get; set; }
-    void OpenConection();
+    IDbConnection Connection { get; set; }
+    void OpenConnection();
     void CloseConnection();
     
     Task<IEnumerable<T>> ExecuteQueryAsync<T>(string query, IEnumerable<IDbDataParameter> parameters = null);

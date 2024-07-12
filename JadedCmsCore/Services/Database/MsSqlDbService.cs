@@ -1,35 +1,40 @@
 using System.Data;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using JadedCmsCore.Interfaces.Database;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Data.SqlClient;
-using Dapper;
 
 namespace JadedCmsCore.Services.Database;
 
 public class MsSqlDbService : IDatabaseService
 {
-    private string _connectionString { get; set; }
-    
-    public IDbConnection Conection { get; set; }
+    private readonly string _connectionString;
+
+    public IDbConnection Connection { get; set; }
+
     public MsSqlDbService(IConfiguration configuration)
     {
         _connectionString = configuration["ConnectionStrings:DbConnection"];
     }
-    
-    public void OpenConection()
+
+    public void OpenConnection()
     {
-        Conection = new SqlConnection(_connectionString);
-        Conection.Open();
+        Connection = new SqlConnection(_connectionString);
+        Connection.Open();
     }
-    
+
     public void CloseConnection()
     {
-        Conection.Close();
+        if (Connection != null && Connection.State == ConnectionState.Open)
+        {
+            Connection.Close();
+        }
     }
 
     public IDbDataParameter CreateParameter(string name, object value, DbType dbType, ParameterDirection direction = ParameterDirection.Input, int size = 0)
     {
-        var parameter = new SqlParameter
+        return new SqlParameter
         {
             ParameterName = name,
             Value = value,
@@ -37,42 +42,88 @@ public class MsSqlDbService : IDatabaseService
             Direction = direction,
             Size = size
         };
-        return parameter;
     }
-    
+
     public async Task<IEnumerable<T>> ExecuteQueryAsync<T>(string query, IEnumerable<IDbDataParameter> parameters = null)
     {
-        using (var connection = new SqlConnection(_connectionString))
-        {
-            await connection.OpenAsync();
-            return await connection.QueryAsync<T>(query, parameters);
-        }
-    }
+        var results = new List<T>();
 
-    public async Task<IEnumerable<T>> ExecuteStoredProcedureAsync<T>(string storedProcedureName, IEnumerable<IDbDataParameter> parameters = null)
-    {
         using (var connection = new SqlConnection(_connectionString))
         {
             await connection.OpenAsync();
-            return await connection.QueryAsync<T>(storedProcedureName, parameters, commandType: CommandType.StoredProcedure);
-        }
-    }
-
-    public async Task ExecuteCommandAsync(string command, IEnumerable<IDbDataParameter> parameters = null)
-    {
-        using (var connection = new SqlConnection(_connectionString))
-        {
-            await connection.OpenAsync();
-            using (var sqlCommand = new SqlCommand(command, connection))
+            using (var command = new SqlCommand(query, connection))
             {
                 if (parameters != null)
                 {
                     foreach (var parameter in parameters)
                     {
-                        sqlCommand.Parameters.Add(parameter);
+                        command.Parameters.Add(parameter);
                     }
                 }
-                await sqlCommand.ExecuteNonQueryAsync();
+
+                using (var reader = await command.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        // Assuming T has a constructor that takes an IDataRecord
+                        results.Add((T)Activator.CreateInstance(typeof(T), reader));
+                    }
+                }
+            }
+        }
+
+        return results;
+    }
+
+    public async Task<IEnumerable<T>> ExecuteStoredProcedureAsync<T>(string storedProcedureName, IEnumerable<IDbDataParameter> parameters = null)
+    {
+        var results = new List<T>();
+
+        using (var connection = new SqlConnection(_connectionString))
+        {
+            await connection.OpenAsync();
+            using (var command = new SqlCommand(storedProcedureName, connection))
+            {
+                command.CommandType = CommandType.StoredProcedure;
+
+                if (parameters != null)
+                {
+                    foreach (var parameter in parameters)
+                    {
+                        command.Parameters.Add(parameter);
+                    }
+                }
+
+                using (var reader = await command.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        // Assuming T has a constructor that takes an IDataRecord
+                        results.Add((T)Activator.CreateInstance(typeof(T), reader));
+                    }
+                }
+            }
+        }
+
+        return results;
+    }
+
+    public async Task ExecuteCommandAsync(string commandText, IEnumerable<IDbDataParameter> parameters = null)
+    {
+        using (var connection = new SqlConnection(_connectionString))
+        {
+            await connection.OpenAsync();
+            using (var command = new SqlCommand(commandText, connection))
+            {
+                if (parameters != null)
+                {
+                    foreach (var parameter in parameters)
+                    {
+                        command.Parameters.Add(parameter);
+                    }
+                }
+
+                await command.ExecuteNonQueryAsync();
             }
         }
     }
