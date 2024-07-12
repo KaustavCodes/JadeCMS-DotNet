@@ -13,7 +13,7 @@ public class AdminUsers
 
     public List<Admins> GetAdmins()
     {
-        var admins = _databaseService.ExecuteQueryAsync<Admins>("SELECT * FROM Admins;").Result.ToList();
+        var admins = _databaseService.ExecuteQueryAsync<Admins>("SELECT * FROM Admins;").GetAwaiter().GetResult().ToList();
         return admins;
     }
 }

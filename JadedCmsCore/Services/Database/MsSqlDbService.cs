@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using JadedCmsCore.Interfaces.Database;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Data.SqlClient;
+using System.Reflection;
 
 namespace JadedCmsCore.Services.Database;
 
@@ -63,11 +64,24 @@ public class MsSqlDbService : IDatabaseService
 
                 using (var reader = await command.ExecuteReaderAsync())
                 {
-                    while (await reader.ReadAsync())
+                    DataTable schemaTable = reader.GetSchemaTable();
+                    var columnNames = schemaTable.Rows.Cast<DataRow>()
+                                        .Select(row => row["ColumnName"].ToString()).ToList();
+
+                    T instance = Activator.CreateInstance<T>();
+                    var properties = typeof(T).GetProperties();
+
+                    while (reader.Read())
                     {
-                        // Assuming T has a constructor that takes an IDataRecord
-                        results.Add((T)Activator.CreateInstance(typeof(T), reader));
+                        foreach (var property in properties)
+                        {
+                            if (columnNames.Contains(property.Name) && !reader.IsDBNull(reader.GetOrdinal(property.Name)))
+                            {
+                                property.SetValue(instance, reader[property.Name]);
+                            }
+                        }
                     }
+                    results.Add(instance);
                 }
             }
         }
@@ -106,6 +120,40 @@ public class MsSqlDbService : IDatabaseService
         }
 
         return results;
+    }
+
+    public async Task<Dictionary<string, object>> ExecuteStoredProcedureWithOutputAsync(string storedProcedureName, IEnumerable<IDbDataParameter> parameters)
+    {
+        var outputValues = new Dictionary<string, object>();
+
+        using (var connection = new SqlConnection(_connectionString))
+        {
+            await connection.OpenAsync();
+            using (var command = new SqlCommand(storedProcedureName, connection))
+            {
+                command.CommandType = CommandType.StoredProcedure;
+
+                if (parameters != null)
+                {
+                    foreach (var parameter in parameters)
+                    {
+                        command.Parameters.Add(parameter);
+                    }
+                }
+
+                await command.ExecuteNonQueryAsync();
+
+                foreach (SqlParameter parameter in command.Parameters)
+                {
+                    if (parameter.Direction == ParameterDirection.Output || parameter.Direction == ParameterDirection.InputOutput)
+                    {
+                        outputValues.Add(parameter.ParameterName, parameter.Value);
+                    }
+                }
+            }
+        }
+
+        return outputValues;
     }
 
     public async Task ExecuteCommandAsync(string commandText, IEnumerable<IDbDataParameter> parameters = null)
