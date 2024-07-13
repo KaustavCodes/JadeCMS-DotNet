@@ -5,9 +5,16 @@
     Layout = "_AuthLayout";
 }
 
+@section Styles {
+    <link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
+}
+
 <!-- Create a bootstrap login form -->
 <div class="jd-login-form">
     <form asp-action="Login" asp-controller="Auth" method="post">
+        <div class="login-logo">
+            <img src="~/assets/img/admin_logo_light.png" alt="JadedCms" class="login_pg_logo" />
+        </div>
         <h2 class="text-center">Log in</h2>
         <div class="form-group">
             @Html.TextBoxFor(t => t.Username, new { @class = "form-control", @placeholder = "Username", @required = "required" })
@@ -19,7 +26,7 @@
             <button type="submit" class="btn btn-primary btn-block">Log in</button>
         </div>
         <div class="clearfix">
-            <label class="float-left form-check-label">
+            <label class="float-left form-check-label login-rememberme">
                 @Html.CheckBoxFor(t => t.RememberMe) Remember me</label>
         </div>
     </form>

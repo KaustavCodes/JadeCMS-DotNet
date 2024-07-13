@@ -1,0 +1,87 @@
+body {
+    background: #ffffff;
+}
+.login_pg_logo {
+    width: 100%;
+}
+
+.login-right  {
+    background-color: #ffffff;
+    height: 100vh;
+}
+
+.login-left  {
+    background-color: #418EE2;
+    height: 100vh;
+}
+
+
+.login_pg_logo {
+    height: 100vh;
+    width: auto;
+    margin: 0 auto;
+}
+
+
+.login_pg_footer {
+    position: absolute;
+    bottom: 0;
+    text-align: right;
+    padding: 10px;
+}
+
+.logo_left_logo_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login_content_content {
+    width: 60%;
+    margin: 0 auto;
+}
+
+.login-rememberme {
+    float: right;
+}
+
+
+.jd-login-form { 
+    margin-top: 20%;
+}
+
+.login-right .login-logo img{
+    width: 80%;
+    height: auto;
+    display: block;
+    margin: 0px auto;
+    padding-bottom: 100px;
+}
+
+.login_pg_footer {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    text-align: left;
+}
+
+@media screen and (max-width: 768px) {
+    .login-left {
+        display: none;
+    }
+
+    .login-right {
+        width: 100%;
+    }
+
+    .login-right .logo-div {
+        display: block;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    /* .login-right .login-logo { 
+        display: none;
+    } */
+}

@@ -7,31 +7,33 @@
     <link rel="stylesheet" href="~/vendor/bootstrap-3.4.1-dist/css/bootstrap.css" />
     <link rel="stylesheet" href="~/vendor/bootstrap-3.4.1-dist/css/bootstrap-theme.css" />
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+
+    @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
-    <div class="container">
-        <!-- Create 2 column layout but in mobile only 2nd column will show ->
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-md-6">
-                <div>
-                    <img src="~/assets/img/admin_logo_light.png" alt="JadedCms" class="login_pg_logo" />
+            <div class="col-lg-6 col-md-6 col-sm-0 login-left">
+                <div class="logo_left_logo_container">
+                    <img src="~/assets/img/login_sidebar.jpg" alt="JadedCms" class="login_pg_logo" />
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-lg-6 col-md-6 col-sm-12 login-right">
                 <main role="main" class="pb-3">
-                    @RenderBody()
+                    <div class="login_content_content">
+                        @RenderBody()
+                    </div>
+                    <div class="border-top footer text-muted login_pg_footer">
+                            &copy; @(DateTime.Now.Year) - JadedCms-DotNet
+                    </div>
                 </main>
+                
             </div>
         </div>
     </div>
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; @(DateTime.Now.Year) - JadedCms-DotNet
-        </div>
-    </footer>
+    
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/vendor/bootstrap-3.4.1-dist/js/bootstrap.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
