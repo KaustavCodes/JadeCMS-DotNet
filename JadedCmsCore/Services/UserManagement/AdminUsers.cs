@@ -1,5 +1,6 @@
 ﻿using JadedCmsCore.Interfaces.Database;
 using JadedCmsCore.Services.Database.DbObjects;
+using JadedEncryption;
 
 namespace JadedCmsCore.Services.UserManagement;
 

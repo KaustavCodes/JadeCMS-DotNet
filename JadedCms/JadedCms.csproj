@@ -15,6 +15,11 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.6" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot/assets/" />
+    <Folder Include="wwwroot/assets/img/" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
