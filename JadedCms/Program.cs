@@ -27,6 +27,9 @@ switch (databaseType)
     case "MsSql":
         builder.Services.AddSingleton<IDatabaseService, MsSqlDbService>();
         break;
+    case "MySql":
+        builder.Services.AddSingleton<IDatabaseService, MsSqlDbService>();
+        break;
     // Add cases for other database types
     default:
         throw new Exception("Unsupported database type");

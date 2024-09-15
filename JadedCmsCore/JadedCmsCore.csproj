@@ -15,10 +15,8 @@
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Services/Database/DbObjects/" />
+    <PackageReference Include="MySql.Data" Version="9.0.0" />
+    <PackageReference Include="Npgsql" Version="4.0.14" />
   </ItemGroup>
 
 </Project>
